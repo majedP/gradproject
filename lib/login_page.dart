@@ -1,7 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'EHomepage.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  String _errorMessage = ""; // Add an error message string
+
+  void _signIn(BuildContext context) {
+    setState(() {
+      _errorMessage = ""; // Clear previous error message on new sign-in attempt
+    });
+    Supabase.instance.client.auth
+        .signInWithPassword(
+            email: _emailController.text, password: _passwordController.text)
+        .then((response) {
+      if (response.user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => EmailHomepage()),
+        );
+      } else {
+        setState(() {
+          _errorMessage =
+              'Login failed, please try again.'; // Update error message on failure
+        });
+      }
+    }).catchError((error) {
+      setState(() {
+        _errorMessage =
+            'An error occurred, please try again later.'; // Update error message on error
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,11 +49,20 @@ class LoginPage extends StatelessWidget {
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.height * 0.2),
               Image.asset(
-                'assets/images/Registepp.png', // Replace with your image asset
+                'assets/images/Registepp.png', // Ensure this image asset is available in your project
                 width: MediaQuery.of(context).size.width * 0.8,
                 fit: BoxFit.contain,
               ),
-              SizedBox(height: 40),
+              if (_errorMessage
+                  .isNotEmpty) // Conditionally display error message
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    _errorMessage,
+                    style: TextStyle(color: Colors.red, fontSize: 16),
+                  ),
+                ),
+              SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32.0),
                 child: Column(
@@ -29,10 +75,11 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     TextField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                         hintText: 'Enter your email',
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Color.fromARGB(255, 25, 53, 28),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide.none,
@@ -48,10 +95,11 @@ class LoginPage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     TextField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         hintText: 'Enter your password',
                         filled: true,
-                        fillColor: Colors.white,
+                        fillColor: Color.fromARGB(255, 25, 53, 28),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           borderSide: BorderSide.none,
@@ -63,14 +111,7 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () {
-                          // TODO: Implement login logic
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EmailHomepage()),
-                          );
-                        },
+                        onPressed: () => _signIn(context),
                         child: Text('Log In'),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.white,

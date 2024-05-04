@@ -1,7 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class AiTextGenPage extends StatelessWidget {
+class AiTextGenPage extends StatefulWidget {
+  @override
+  _AiTextGenPageState createState() => _AiTextGenPageState();
+}
+
+class _AiTextGenPageState extends State<AiTextGenPage> {
   final TextEditingController _promptController = TextEditingController();
+  String _output = "Waiting to craft your email";
+
+  void _generateOutput() async {
+    var response = await http.post(
+      Uri.parse('https://p50mtnbsuhdzm3-5000.proxy.runpod.net/chatbot/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'accept': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'text': _promptController.text,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _output = jsonDecode(response.body)['response'];
+      });
+    } else {
+      setState(() {
+        _output = "Failed to generate output.";
+      });
+      print('Server error: ${response.body}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +58,7 @@ class AiTextGenPage extends StatelessWidget {
             _buildPromptInput(),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                // TODO: Implement the generate functionality
-              },
+              onPressed: _generateOutput,
               child: Text('Generate'),
               style: ElevatedButton.styleFrom(
                 primary: Colors.grey[850], // Button color
@@ -69,7 +99,6 @@ class AiTextGenPage extends StatelessWidget {
   }
 
   Widget _buildOutputField() {
-    // TODO: Replace with a dynamic output field that gets updated with the generated text
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       decoration: BoxDecoration(
@@ -78,7 +107,7 @@ class AiTextGenPage extends StatelessWidget {
       ),
       height: 150, // Fixed height, adjust as needed
       child: SelectableText(
-        '', // Initial text, update this with the generated text
+        _output, // Update this with the generated text
         style: TextStyle(color: Colors.white),
       ),
     );

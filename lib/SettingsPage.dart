@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'login_page.dart'; // Make sure to import your actual login page
+import 'changePass.dart';
+import 'profile_page.dart';
+import 'main.dart'; // Import main.dart to access WelcomeScreen
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -15,7 +20,10 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             title: Text('Profile', style: TextStyle(color: Colors.white)),
             onTap: () {
-              // Navigate to Profile settings
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
             },
           ),
           Divider(color: Colors.white),
@@ -23,7 +31,10 @@ class SettingsPage extends StatelessWidget {
             title:
                 Text('Change Password', style: TextStyle(color: Colors.white)),
             onTap: () {
-              // Navigate to Change Password settings
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChangePasswordPage()),
+              );
             },
           ),
           Divider(color: Colors.white),
@@ -37,9 +48,14 @@ class SettingsPage extends StatelessWidget {
                     primary: Colors.grey, // Button color
                     onPrimary: Colors.black, // Text color
                   ),
-                  onPressed: () {
-                    // Implement logout functionality
-                    // Usually, you would clear user data and navigate to the login screen
+                  onPressed: () async {
+                    await Supabase.instance.client.auth.signOut();
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              WelcomeScreen()), // Navigate back to WelcomeScreen
+                    );
                   },
                   child: SizedBox(
                     width:

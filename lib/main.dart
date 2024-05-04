@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart'; // Supabase package
 import 'login_page.dart';
 import 'register.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // Required for initialization
+  await Supabase.initialize(
+    url:
+        'https://vlndoxzfgkjpxwxykkha.supabase.co', // Replace with your Supabase Project URL
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsbmRveHpmZ2tqcHh3eHlra2hhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTQ0NTMyMzUsImV4cCI6MjAzMDAyOTIzNX0.2INpJNAL7K0m7k7luUDSWwSgd_zsqF7r3E0O21dsfCY', // Replace with your Supabase Anon Key
+  );
+  runApp(MyApp());
+}
+
+final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   @override
@@ -79,3 +91,5 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 }
+
+// The LoginPage and RegisterPage classes should also be defined in their respective files.

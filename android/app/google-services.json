@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "1062404949552",
-    "project_id": "fcit2024-d9038",
-    "storage_bucket": "fcit2024-d9038.appspot.com"
+    "project_number": "784173586119",
+    "project_id": "fcit24",
+    "storage_bucket": "fcit24.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1062404949552:android:fc0c95a9d999efb8344ff5",
+        "mobilesdk_app_id": "1:784173586119:android:568ef4aefde7898b3d50e2",
         "android_client_info": {
           "package_name": "com.example.gradproject"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCfkTw_lOeH0cMRbN-xx8nFChriZf2Ma24"
+          "current_key": "AIzaSyB28fv7MO3Y-wyKdvdWOP1eMD0hNHfanBI"
         }
       ],
       "services": {
