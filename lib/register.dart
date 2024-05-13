@@ -15,6 +15,14 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _phoneController = TextEditingController();
 
   Future<void> _register(BuildContext context) async {
+    // Check if the email field is empty
+    if (_emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please enter an email to register.")),
+      );
+      return;
+    }
+
     if (_passwordController.text != _confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Passwords do not match")),
@@ -105,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
             decoration: InputDecoration(
               hintText: 'Enter your $label',
               filled: true,
-              fillColor: Color.fromARGB(255, 25, 53, 28),
+              fillColor: Colors.grey[850], // Corrected the fill color
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
                 borderSide: BorderSide.none,

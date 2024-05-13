@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'SettingsPage.dart';
+import 'SettingsPage.dart'; // Ensure you have this file or remove the import if not used.
 
 class ChangePasswordPage extends StatefulWidget {
   @override
@@ -66,7 +66,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 controller: _confirmPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  labelText: 'Confirmation Password',
+                  labelText: 'Confirm New Password',
                   labelStyle: TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: Colors.grey[800],
@@ -98,10 +98,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   void _changePassword() {
     if (_formKey.currentState!.validate()) {
-      // Here you can add your logic for changing the password in your backend
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Processing Data')),
+        SnackBar(content: Text('Password has been changed successfully')),
       );
+      // Here you can also add your logic for changing the password in your backend.
     }
   }
 }

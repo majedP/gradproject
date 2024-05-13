@@ -17,32 +17,6 @@ class EmailHomepage extends StatelessWidget {
         children: <Widget>[
           Column(
             children: <Widget>[
-              Container(
-                color: Colors.black,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      TextButton(
-                        child: Text('Inbox',
-                            style: TextStyle(color: Colors.white)),
-                        onPressed: () {/* ... */},
-                      ),
-                      TextButton(
-                        child:
-                            Text('Sent', style: TextStyle(color: Colors.grey)),
-                        onPressed: () {/* ... */},
-                      ),
-                      TextButton(
-                        child:
-                            Text('Draft', style: TextStyle(color: Colors.grey)),
-                        onPressed: () {/* ... */},
-                      ),
-                    ],
-                  ),
-                ),
-              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: 4, // Number of emails to display

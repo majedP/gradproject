@@ -16,6 +16,21 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _errorMessage = ""; // Clear previous error message on new sign-in attempt
     });
+
+    if (_emailController.text.isEmpty) {
+      setState(() {
+        _errorMessage = "Please enter an email to log in.";
+      });
+      return;
+    }
+
+    if (_passwordController.text.isEmpty) {
+      setState(() {
+        _errorMessage = "Please enter a password to log in.";
+      });
+      return;
+    }
+
     Supabase.instance.client.auth
         .signInWithPassword(
             email: _emailController.text, password: _passwordController.text)
@@ -26,15 +41,14 @@ class _LoginPageState extends State<LoginPage> {
           MaterialPageRoute(builder: (context) => EmailHomepage()),
         );
       } else {
+        // This condition might never be true because usually null user comes with an error
         setState(() {
-          _errorMessage =
-              'Login failed, please try again.'; // Update error message on failure
+          _errorMessage = 'Login failed, please check your email and password.';
         });
       }
     }).catchError((error) {
       setState(() {
-        _errorMessage =
-            'An error occurred, please try again later.'; // Update error message on error
+        _errorMessage = error.message ?? 'An unexpected error occurred.';
       });
     });
   }
@@ -49,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
               SizedBox(height: MediaQuery.of(context).size.height * 0.2),
               Image.asset(
-                'assets/images/Registepp.png', // Ensure this image asset is available in your project
+                'assets/images/Registepp.png',
                 width: MediaQuery.of(context).size.width * 0.8,
                 fit: BoxFit.contain,
               ),
