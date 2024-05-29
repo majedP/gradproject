@@ -15,7 +15,7 @@ class _AiTextGenPageState extends State<AiTextGenPage> {
 
   void _generateOutput() async {
     var response = await http.post(
-      Uri.parse('https://2mx4hpgnclne4t-5000.proxy.runpod.net/chatbot/'),
+      Uri.parse('https://gkhyg5jqizbnvi-5000.proxy.runpod.net/chatbot/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'accept': 'application/json',
@@ -145,7 +145,7 @@ class _AiTextGenPageState extends State<AiTextGenPage> {
         color: Colors.grey[850],
         borderRadius: BorderRadius.circular(8),
       ),
-      height: 150, // Fixed height, adjust as needed
+      height: 450, // Fixed height, adjust as needed
       child: SelectableText(
         _output,
         style: TextStyle(color: Colors.white),

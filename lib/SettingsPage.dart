@@ -3,7 +3,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'login_page.dart';
 import 'changePass.dart';
 import 'profile_page.dart';
-import 'write_text_page.dart';
 import 'view_texts_page.dart'; // Ensure this is properly imported
 import 'main.dart'; // This is assumed to contain your WelcomeScreen
 
